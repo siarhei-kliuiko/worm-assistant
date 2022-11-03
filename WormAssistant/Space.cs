@@ -9,13 +9,14 @@ namespace WormAssistant
         public const float Gravity = 1.3f;
         private static Worm worm;
         private static Timer time = new Timer { Interval = 16 };
+        private static System.Threading.Mutex mut; 
         public static int TimeSpeed => time.Interval;
         public static Rectangle Surface => new Rectangle(0, Screen.PrimaryScreen.WorkingArea.Height, Screen.PrimaryScreen.WorkingArea.Width, 1);
 
         [STAThread]
         static void Main()
         {
-            new System.Threading.Mutex(true, "WormMutex", out bool firstRun);
+            mut = new System.Threading.Mutex(true, "WormMutex", out bool firstRun);
             if (firstRun)
             {
                 Application.EnableVisualStyles();
